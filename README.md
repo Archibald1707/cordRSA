@@ -38,10 +38,15 @@ This is a simple client-server chat application that uses RSA encryption for sec
     ```
 
 ## Folder Structure
-- `client.py`: The client-side code for sending and receiving encrypted messages.
-- `server.py`: The server-side code for handling multiple clients and broadcasting messages.
-- `rsa_utils.py`: RSA encryption utilities for generating keys, encrypting, and decrypting messages.
-- `.gitignore`: Excludes `__pycache__` and other unnecessary files.
+- **client.py**: The client-side code for sending and receiving encrypted messages.
+- **server.py**: The server-side code for handling multiple clients, broadcasting encrypted messages, and managing RSA key exchange.
+- **rsa_utils.py**: RSA encryption utilities for generating keys, encrypting, and decrypting messages.
+- **.gitignore**: Excludes `__pycache__` and other unnecessary files.
+- **setup.py**: Python setup script for installing the project and managing dependencies.
+- **requirements.txt**: Lists project dependencies such as `colorama` and `sympy`.
+- **LICENSE**: Contains the MIT license under which the project is distributed.
+- **README.md**: Documentation for the project, including installation instructions, usage, and details about the project structure.
+
 
 ## License
 This project is open source and available under the [MIT License](LICENSE).
