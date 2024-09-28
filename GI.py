@@ -5,7 +5,8 @@ import socket
 import pickle
 from rsa_utils import generate_rsa_keys, encrypt_message, decrypt_message
 
-public_key, private_key = generate_rsa_keys()
+client_public_key, client_private_key = generate_rsa_keys()
+server_public_key = None
 
 root = tk.Tk()
 root.title("RSA Chat Client")
@@ -30,7 +31,7 @@ def receive_messages(client):
             encrypted_response = client.recv(1024)
             if encrypted_response:
                 encrypted_response = int.from_bytes(encrypted_response, byteorder='big')
-                decrypted_message = decrypt_message(encrypted_response, private_key)
+                decrypted_message = decrypt_message(encrypted_response, client_private_key)
                 add_message(f"New message: {decrypted_message}")
             else:
                 add_message("Disconnected from server.")
@@ -44,7 +45,7 @@ def send_message():
     message = message_entry.get()
     if message:
         try:
-            encrypted_message = encrypt_message(message, public_key)
+            encrypted_message = encrypt_message(message, server_public_key)
             client.send(encrypted_message.to_bytes((encrypted_message.bit_length() + 7) // 8, byteorder='big'))
             add_message(f"Me: {message}")
             message_entry.delete(0, tk.END)
@@ -54,13 +55,16 @@ def send_message():
 send_button.config(command=send_message)
 
 def start_client():
-    global client
+    global client, server_public_key
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         client.connect(('127.0.0.1', 5555))
-        client.send(pickle.dumps(public_key))
-        add_message("Connected to server.")
-        
+        client.send(pickle.dumps(client_public_key))
+        add_message("Sent public key to server.")
+
+        server_public_key = pickle.loads(client.recv(1024))
+        add_message("Received server public key.")
+
         receive_thread = threading.Thread(target=receive_messages, args=(client,))
         receive_thread.start()
     except Exception as e:
