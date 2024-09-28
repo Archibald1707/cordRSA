@@ -1,15 +1,16 @@
-import random
+import secrets
 from sympy import isprime, mod_inverse
 
 def generate_prime(bits):
     while True:
-        prime = random.getrandbits(bits)
+        prime = secrets.randbits(bits)
         if isprime(prime):
             return prime
 
 def generate_rsa_keys(bits=1024):
     p = generate_prime(bits // 2)
     q = generate_prime(bits // 2)
+    print(p, q)
     n = p * q
     phi_n = (p - 1) * (q - 1)
     e = 65537
