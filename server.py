@@ -1,13 +1,14 @@
 import socket
 import threading
 import pickle
-from rsa_utils import generate_rsa_keys, decrypt_message, encrypt_message
-from colorama import init, Fore, Style
+from logic.rsa_utils import generate_rsa_keys, decrypt_message, encrypt_message
+from colorama import init, Fore
 
 init(autoreset=True)
 
 clients = {}
 public_keys = {}
+voice_chat_users = set()  # Храним пользователей, которые находятся в голосовом чате
 
 server_public_key, server_private_key = generate_rsa_keys()
 
@@ -24,6 +25,17 @@ def broadcast(message, sender_client):
                 print(Fore.RED + f"Error sending message to client {clients[client]}: {e}")
                 client.close()
                 clients.pop(client)
+
+def update_voice_chat_users():
+    for client in clients:
+        try:
+            client_public_key = public_keys[client]
+            user_list_message = f"Voice Chat Users: {', '.join(voice_chat_users)}"
+            encrypted_user_list = encrypt_message(user_list_message, client_public_key)
+            client.send(encrypted_user_list.to_bytes((encrypted_user_list.bit_length() + 7) // 8, byteorder='big'))
+            print(Fore.GREEN + "Sent updated voice chat user list to clients")
+        except Exception as e:
+            print(Fore.RED + f"Error sending user list to client {clients[client]}: {e}")
 
 def handle_client(client_socket, address):
     try:
@@ -43,8 +55,16 @@ def handle_client(client_socket, address):
             print(Fore.MAGENTA + f"Encrypted message (bytes) from {address}: {encrypted_message}")
             encrypted_message_int = int.from_bytes(encrypted_message, byteorder='big')
             decrypted_message = decrypt_message(encrypted_message_int, server_private_key)
-            print(Fore.CYAN + f"Decrypted message from {address}: {decrypted_message}")
-            broadcast(decrypted_message, client_socket)
+
+            if decrypted_message == "Enter VC":
+                voice_chat_users.add(str(address))
+                update_voice_chat_users()
+            elif decrypted_message == "Leave VC":
+                voice_chat_users.discard(str(address))
+                update_voice_chat_users()
+            else:
+                print(Fore.CYAN + f"Decrypted message from {address}: {decrypted_message}")
+                broadcast(decrypted_message, client_socket)
     except Exception as e:
         print(Fore.RED + f"Error handling client {address}: {e}")
     finally:
@@ -52,6 +72,8 @@ def handle_client(client_socket, address):
         client_socket.close()
         clients.pop(client_socket)
         public_keys.pop(client_socket)
+        voice_chat_users.discard(str(address))
+        update_voice_chat_users()
 
 def start_server():
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
