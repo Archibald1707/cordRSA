@@ -39,21 +39,36 @@ This is a simple client-server chat application that uses RSA encryption for sec
     python client.py
     ```
 
-3. **Start the GUI client** (Tkinter interface):
-    ```bash
-    python gui_client.py
-    ```
-
 ## Folder Structure
-- **client.py**: The client-side code for sending and receiving encrypted messages in the terminal.
-- **gui_client.py**: The Tkinter-based GUI client for sending and receiving encrypted messages through a graphical interface.
-- **server.py**: The server-side code for handling multiple clients, broadcasting encrypted messages, and managing RSA key exchange.
-- **rsa_utils.py**: RSA encryption utilities for generating keys, encrypting, and decrypting messages.
-- **.gitignore**: Excludes `__pycache__` and other unnecessary files.
-- **setup.py**: Python setup script for installing the project and managing dependencies.
-- **requirements.txt**: Lists project dependencies such as `colorama` and `sympy`.
-- **LICENSE**: Contains the MIT license under which the project is distributed.
-- **README.md**: Documentation for the project, including installation instructions, usage, and details about the project structure.
+
+```
+cordRSA
+│   .gitattributes
+│   .gitignore
+│   client.py
+│   LICENSE
+│   README.md
+│   requirements.txt
+│   server.py
+│   setup.py
+│
+├───gui
+│   │   interface.py
+│   │
+│   └───__pycache__
+│           interface.cpython-312.pyc
+│
+├───logic
+│   │   client_logic.py
+│   │   rsa_utils.py
+│   │
+│   └───__pycache__
+│           client_logic.cpython-312.pyc
+│           rsa_utils.cpython-312.pyc
+│
+└───__pycache__
+        rsa_utils.cpython-312.pyc
+```
 
 ## License
 This project is open source and available under the [MIT License](LICENSE).
