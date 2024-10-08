@@ -1,8 +1,12 @@
-# RSA-Coded Chat Application
+# RSA-Coded Chat Application 🔒💬
 
 This is a simple client-server chat application that uses RSA encryption for secure communication between clients and the server. The project is written in Python and includes color-coded logging for better readability of messages and errors. A graphical user interface (GUI) client is also available using Tkinter.
 
-## Features
+![Python](https://img.shields.io/badge/python-3.6%2B-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
+![Status](https://img.shields.io/badge/status-active-brightgreen)
+
+## ✨ Features
 - **RSA Encryption**: Secure message transmission between clients and server using RSA public and private key pairs.
 - **Real-Time Communication**: Multi-threading allows clients to send and receive messages simultaneously.
 - **Graphical User Interface**: A Tkinter-based GUI client that allows users to send and receive encrypted messages through a simple interface.
@@ -10,7 +14,7 @@ This is a simple client-server chat application that uses RSA encryption for sec
 - **Color-Coded Logging**: Terminal outputs are color-coded using the `colorama` library to easily distinguish between message types and errors.
 - **Gitignore Configuration**: Excludes unnecessary files such as `__pycache__` and other auto-generated Python files.
 
-## Installation
+## 📥 Installation
 
 1. Clone the repository:
     ```bash
@@ -27,7 +31,7 @@ This is a simple client-server chat application that uses RSA encryption for sec
     pip install colorama
     ```
 
-## Usage
+## 🚀 Usage
 
 1. **Start the server**:
     ```bash
@@ -39,7 +43,7 @@ This is a simple client-server chat application that uses RSA encryption for sec
     python client.py
     ```
 
-## Folder Structure
+## 📂 Folder Structure
 
 ```
 cordRSA
@@ -70,5 +74,15 @@ cordRSA
         rsa_utils.cpython-312.pyc
 ```
 
-## License
+## 🤝 Contribution
+
+Contributions are welcome! If you would like to contribute to the project, please follow these steps:
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Commit your changes (`git commit -am 'Add some feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a Pull Request.
+
+## 📜 License
 This project is open source and available under the [MIT License](LICENSE).
+
