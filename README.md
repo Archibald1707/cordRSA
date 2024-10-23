@@ -1,4 +1,4 @@
-# RSA-Coded Chat Application 🔒💬
+# RSA-Coded Chat Application 🔒
 
 This is a simple client-server chat application that uses RSA encryption for secure communication between clients and the server. The project is written in Python and includes color-coded logging for better readability of messages and errors. A graphical user interface (GUI) client is also available using Tkinter.
 
